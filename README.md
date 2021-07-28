@@ -8,6 +8,7 @@
 
 ### 已更新:beers:
 
+- [Docker增删改查篇](./cheat_sheet/README.md)
 - [如何在国内最舒服的用Docker?](./docker_network_problems)
 - [如何在Docker容器内运行GUI程序？](./run_gui_from_container/README.md)
 
