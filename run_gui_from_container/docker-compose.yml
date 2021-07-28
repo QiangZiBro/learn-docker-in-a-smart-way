@@ -1,0 +1,12 @@
+version: '3'
+services:
+  show_image:
+    image: show_image_docker
+    command: bash -c "python main.py"
+    volumes:
+        - .:/workspace
+    # find your ip address on mac
+    environment:
+      - "DISPLAY=192.168.3.2:0"
+
+

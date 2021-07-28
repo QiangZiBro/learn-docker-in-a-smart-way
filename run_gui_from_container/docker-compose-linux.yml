@@ -1,0 +1,12 @@
+version: '3'
+services:
+  show_image:
+    image: show_image_docker
+    volumes:
+        - /tmp/.X11-unix:/tmp/.X11-unix
+        - .:/workspace
+    command: bash -c "python main.py"
+    environment:
+      - "DISPLAY=:11.0"
+
+
