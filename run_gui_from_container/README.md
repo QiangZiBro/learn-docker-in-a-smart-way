@@ -174,8 +174,11 @@ services:
 
 ## 运行Github例子
 
-```
-bash setup.sh
+```bash
+# 做好上述准备工作
+git clone https://github.com/QiangZiBro/docker-tutorial
+cd docker-tutorial/run_gui_from_container
+bash setup.sh # 生成docker-compose.yml文件
 make build
 make up
 ```
