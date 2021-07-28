@@ -10,9 +10,7 @@
 
 
 
-容器里没有显示屏，无法供我们运行opencv或者plt的显示，但可以通过中间程序搭起桥梁。本文相关Dockerfile，python显示文件可在我的github教程找到。
-
-
+容器里没有显示屏，无法供我们运行opencv或者plt的显示，但可以通过中间程序搭起桥梁。本文相关Dockerfile，python显示文件可在https://github.com/QiangZiBro/docker-tutorial/tree/main/run_gui_from_container找到。
 
 ## Mac上运行的docker容器显示图像
 
@@ -172,6 +170,14 @@ services:
     command: bash -c "python main.py"
     environment:
       - "DISPLAY=:0"
+```
+
+## 运行Github例子
+
+```
+bash setup.sh
+make build
+make up
 ```
 
 ## 参考资料
