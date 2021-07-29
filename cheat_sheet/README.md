@@ -1,10 +1,10 @@
 ## 增
-## 镜像导出文件
+镜像导出文件
 
 ```bash
 docker save image_name > path/to/image.tar
 ```
-## 从镜像文件加载
+从镜像文件加载
 
 ```bash
 docker load < image.tar
@@ -20,14 +20,23 @@ docker load < image.tar
 
 
 ## 删
-- docker一键停止删除所有容器和镜像<font color=red>（谨慎使用或者不要使用！）</font>
+docker一键停止删除所有容器和镜像<font color=red>（谨慎使用或者不要使用！）</font>
+
 ```bash
 docker stop $(docker ps -aq) && docker rm $(docker ps -aq) && docker rmi $(docker images -aq)
 ```
-- docker删除为none的镜像[参考]([https://forums.docker.com/t/how-to-remove-none-images-after-building/7050/16](https://forums.docker.com/t/how-to-remove-none-images-after-building/7050/16))
+docker删除为none的镜像[参考]([https://forums.docker.com/t/how-to-remove-none-images-after-building/7050/16](https://forums.docker.com/t/how-to-remove-none-images-after-building/7050/16))
+
 ```bash
 docker stop $(docker ps -a | grep "Exited" | awk '{print $1 }') #停止容器
 docker rm $(docker ps -a | grep "Exited" | awk '{print $1 }') #删除容器
 docker rmi $(docker images | grep "none" | awk '{print $3}') #删除镜像
 ```
 
+
+
+
+
+## 更多参考
+
+[ 1 ] : https://github.com/wsargent/docker-cheat-sheet
