@@ -16,9 +16,9 @@
 
 ### 计划中:runner:
 
-- Dockerfile使用解析——如何快速为我的项目写一份Dockerfile？
-- docker-compose.yml使用解析——如何快速为我的项目写一份docker-compose.yml？
-- 使用容器搭建你的深度学习环境——2021年如何用Docker加速深度学习研究？
+- 动手写Dockerfile——如何快速为我的项目写一份Dockerfile？
+- 动手写docker-compose.yml使用解析——如何快速为我的项目写一份docker-compose.yml？
+- 动手搭建基于Docker的深度学习环境——2021年如何用Docker加速深度学习研究？
 - 基于Horovod+docker的分布式训练——当代研究生必知必会的基于容器分布式训练
 - 使用Docker和mmdetection快速搭建你的目标检测框架
 
