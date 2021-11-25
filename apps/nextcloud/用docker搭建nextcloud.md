@@ -68,6 +68,53 @@ docker load < qlinux.tar
 cq && dcd && cg
 ```
 
+### 技巧3 命令行创建文件夹
+
+```bash
+# <user> user name in nextcloud
+# <pass> password <user>
+# <nextcloud root> root folder of nextcloud ex) https://abc.com/nextcloud
+# <folder path to create> Path of nextcloud where you want to create folder as
+curl -X MKCOL -u <user>:<pass> https://<nextcloud root>/remote.php/dav/files/<user>/<folder path to create>
+```
+
+### 技巧4 命令行删除文件夹
+
+```bash
+# <user> user name in nextcloud
+# <pass> password <user>
+# <nextcloud root> root folder of nextcloud ex) https://abc.com/nextcloud
+# <folder path to delete> Path of nextcloud which you want to delete folder
+curl -X DELETE -u <user>:<pass> https://<nextcloud root>/remote.php/dav/files/<user>/<folder path to delete>
+```
+
+### 技巧5 递归上传文件夹
+
+> https://help.nextcloud.com/t/use-api-and-curl-to-download-folders/51184/3
+
+Instead of using curl I recommend to use [**cadaver** 100](https://www.systutorials.com/docs/linux/man/1-cadaver/). With this command line tool you should be able to automate your WebDAV activities better.
+To get it working you first need to create a `~/.netrc` file and add at least the following lien:
+
+```
+machine MYSERVER login YOUR-LOGIN password YOUR-PASSWORD
+```
+
+Second, you create a command script, e.g. `cadaver.rc` to tell the program what it should do, like:
+
+```
+open https://MYSERVER/nextcloud/remote.php/webdav/REMOTE-PATH
+lcd /YOUR-LOCAL-PATH
+mget *txt
+quit
+```
+
+Finally you call the command as follows: `cadaver -r cadaver.rc`
+
+THAT’S IT!
+
+
+
 ## 参考
+
 [1] : https://www.youtube.com/watch?v=dmsW7sKxWVU
 

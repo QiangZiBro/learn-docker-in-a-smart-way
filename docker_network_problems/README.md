@@ -8,7 +8,9 @@ docker是环境管理和项目部署的一大利器，笔者研究生阶段在�
 
 宿主机使用由docker镜像构建的命令行代理，可参考https://github.com/QiangZiBro/Qdotfiles，本文不讲解。假设你的宿主机命令行代理端口是8999，下面介绍几种使用场景。
 
-## 国内镜像源配置
+## 加速Docker pull
+
+### 方法1：国内镜像源配置
 
 第1步，`vim /etc/docker/daemon.json`，将本文件写为：
 
@@ -37,9 +39,39 @@ docker是环境管理和项目部署的一大利器，笔者研究生阶段在�
 systemctl restart docker.service
 ```
 
-## Docker pull 设置代理
+### 方法2：设置代理
 
-参考https://docs.docker.com/config/daemon/systemd/#httphttps-proxy
+参考https://docs.docker.com/config/daemon/systemd/#httphttps-proxy，有两种方法是可以选择，root模式和用户模式。假设我们的http代理端口是本机的8999
+
+- 第一步
+
+  ```bash
+  sudo mkdir -p /etc/systemd/system/docker.service.d
+  ```
+
+- 第二步
+
+  ```bash
+  vim /etc/systemd/system/docker.service.d/http-proxy.conf
+  ```
+
+  添加如下内容
+
+  ```text
+  [Service]
+  Environment="HTTP_PROXY=http://127.0.0.1:8999"
+  Environment="HTTPS_PROXY=https://127.0.0.1:8999"
+  ```
+
+- 第三步
+
+  ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl restart docker
+   sudo systemctl show --property=Environment docker
+  ```
+
+  
 
 ## 编译时使用代理
 
