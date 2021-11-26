@@ -2,13 +2,13 @@
 
 [TOC]
 
-## 导言
+## 前言
 
-docker是环境管理和项目部署的一大利器，笔者研究生阶段在实验、比赛中使用良多。本文汇总国内开发者使用docker遇到头疼的网络问题。
+Docker是环境管理和项目部署的一大利器，笔者研究生阶段在实验、比赛中使用良多。本文汇总国内开发者使用Docker遇到头疼的网络问题。
 
-宿主机使用由docker镜像构建的命令行代理，可参考https://github.com/QiangZiBro/Qdotfiles，本文不讲解。假设你的宿主机命令行代理端口是8999，下面介绍几种使用场景。
+宿主机使用由Docker镜像构建的命令行代理，可参考https://github.com/QiangZiBro/Qdotfiles，本文不讲解。假设你的宿主机命令行代理端口是8999，下面介绍几种使用场景。
 
-## 加速Docker pull
+## docker pull设置代理
 
 ### 方法1：国内镜像源配置
 
@@ -31,7 +31,7 @@ docker是环境管理和项目部署的一大利器，笔者研究生阶段在�
 >
 > 阿里云镜像获取地址：https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors，登陆后，左侧菜单选中镜像加速器就可以看到你的专属地址了：
 > 
->![img](https://www.runoob.com/wp-content/uploads/2019/10/02F3AF04-8203-4E3B-A5AF-96973DBE515F.jpg)
+>![img](https://gitee.com/qiangzibro/uPic/raw/master/uPic/02F3AF04-8203-4E3B-A5AF-96973DBE515F.jpg)
 
 第2步
 
@@ -41,7 +41,7 @@ systemctl restart docker.service
 
 ### 方法2：设置代理
 
-参考https://docs.docker.com/config/daemon/systemd/#httphttps-proxy，有两种方法是可以选择，root模式和用户模式。假设我们的http代理端口是本机的8999
+Linux用户参考https://docs.docker.com/config/daemon/systemd/#httphttps-proxy，有两种方法是可以选择，root模式和用户模式。假设我们的http代理端口是本机的8999
 
 - 第一步
 
@@ -52,16 +52,18 @@ systemctl restart docker.service
 - 第二步
 
   ```bash
-  vim /etc/systemd/system/docker.service.d/http-proxy.conf
+  sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
   ```
 
   添加如下内容
 
   ```text
   [Service]
-  Environment="HTTP_PROXY=http://127.0.0.1:8999"
-  Environment="HTTPS_PROXY=https://127.0.0.1:8999"
+  Environment="HTTP_PROXY=127.0.0.1:8999"
+  Environment="HTTPS_PROXY=127.0.0.1:8999"
   ```
+
+  > 注意：笔者发现网址前面加`http://`或者`https://` ，会出现`Error response from daemon: Get https://registry-1.docker.io/v2/: proxyconnect tcp: net/http: TLS handshake timeout`的错误
 
 - 第三步
 
@@ -71,7 +73,11 @@ systemctl restart docker.service
    sudo systemctl show --property=Environment docker
   ```
 
-  
+Mac用户直接打开Docker GUI
+
+![image-20211126003827412](https://gitee.com/qiangzibro/uPic/raw/master/uPic/image-20211126003827412.png)
+
+
 
 ## 编译时使用代理
 
@@ -83,7 +89,9 @@ docker build -t image_name . --network host \
         --build-arg https_proxy=${https_proxy}
 ```
 
-## 运行容器时使用代理
+
+
+## 容器内部使用代理
 
 方法1：首先将宿主机配置好代理，运行时：
 
@@ -111,7 +119,9 @@ docker run -it --network=host \
 
 保存后，之后的容器代理就是配置文件设置的代理 。
 
-## pycharm使用docker时使用代理
+
+
+## Pycharm使用docker环境运行时使用代理
 
 还有一种情况是使用专业版pycharm+docker环境，运行时会遇到一些下载操作，这种情况也需要使用代理。和上一个方法一样，对每一个运行配置，只需要加入下面参数即可。
 
@@ -119,7 +129,9 @@ docker run -it --network=host \
 --env http_proxy=${http_proxy} --env https_proxy=${https_proxy} 
 ```
 
-## docker-compose 中设置代理
+
+
+## Docker-compose 中设置代理
 
 ```bash
 version: "3.0"
